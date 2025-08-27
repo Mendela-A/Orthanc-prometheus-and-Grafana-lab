@@ -1,5 +1,6 @@
 prometheus/prometheus_data/
 grafana/grafana_data/
+<<<<<<< HEAD
 
 # Created by https://www.toptal.com/developers/gitignore/api/git
 # Edit at https://www.toptal.com/developers/gitignore?templates=git
@@ -20,3 +21,6 @@ grafana/grafana_data/
 *_REMOTE_*.txt
 
 # End of https://www.toptal.com/developers/gitignore/api/git
+=======
+orthanc/orthanc-data/
+>>>>>>> c2d8b0f (Add orthanc persistan data)
