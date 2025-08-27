@@ -1,5 +1,7 @@
 # Orthanc-prometheus-and-Grafana-lab
 Orthanc, prometheus and Grafana lab
+<img width="1888" height="948" alt="image" src="https://github.com/user-attachments/assets/bc636e93-1c60-4138-9f26-c328910a260e" />
+
 
 Your_ip:8042 Orthanc
 Your_ip:9090 Prometheus
