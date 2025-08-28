@@ -1,4 +1,5 @@
 {
   "Name" : "${ORTHANC_NAME} in Docker Compose",
-  "RemoteAccessAllowed" : true
+  "RemoteAccessAllowed" : true,
+  "MaximumStorageCacheSize" : 256
 }
