@@ -1,0 +1,359 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_PROMETHEUS",
+      "label": "Prometheus",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": { "type": "grafana", "uid": "-- Grafana --" },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "panels": [
+    { "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 }, "id": 100, "title": "Storage Overview", "type": "row" },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "fixedColor": "blue", "mode": "fixed" }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "none" }, "overrides": [] },
+      "gridPos": { "h": 5, "w": 4, "x": 0, "y": 1 }, "id": 1,
+      "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+      "pluginVersion": "12.1.1",
+      "targets": [{ "editorMode": "code", "expr": "orthanc_disk_size_mb{job=\"$sources\"}", "legendFormat": "Disk (MB)", "range": true, "refId": "A" }],
+      "title": "Disk Size (MB)", "type": "stat"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "fixedColor": "green", "mode": "fixed" }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "none" }, "overrides": [] },
+      "gridPos": { "h": 5, "w": 4, "x": 4, "y": 1 }, "id": 2,
+      "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+      "pluginVersion": "12.1.1",
+      "targets": [{ "editorMode": "code", "expr": "orthanc_uncompressed_size_mb{job=\"$sources\"}", "legendFormat": "Uncompressed (MB)", "range": true, "refId": "A" }],
+      "title": "Uncompressed Size (MB)", "type": "stat"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "fixedColor": "orange", "mode": "fixed" }, "decimals": 2, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 0.5 }, { "color": "red", "value": 0.9 }] }, "unit": "percentunit" }, "overrides": [] },
+      "gridPos": { "h": 5, "w": 4, "x": 8, "y": 1 }, "id": 3,
+      "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+      "pluginVersion": "12.1.1",
+      "targets": [{ "editorMode": "code", "expr": "orthanc_disk_size_mb{job=\"$sources\"} / orthanc_uncompressed_size_mb{job=\"$sources\"}", "legendFormat": "Ratio", "range": true, "refId": "A" }],
+      "title": "Compression Ratio (disk / uncompressed)", "type": "stat"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "custom": { "axisBorderShow": false, "axisCenteredZero": false, "axisColorMode": "text", "axisLabel": "", "axisPlacement": "auto", "drawStyle": "line", "fillOpacity": 10, "gradientMode": "none", "hideFrom": { "legend": false, "tooltip": false, "viz": false }, "lineInterpolation": "linear", "lineWidth": 1, "pointSize": 5, "scaleDistribution": { "type": "linear" }, "showPoints": "never", "spanNulls": false, "stacking": { "group": "A", "mode": "none" }, "thresholdsStyle": { "mode": "off" } }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "Bps" }, "overrides": [] },
+      "gridPos": { "h": 5, "w": 6, "x": 12, "y": 1 }, "id": 4,
+      "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "none" } },
+      "targets": [{ "editorMode": "code", "expr": "rate(orthanc_storage_written_bytes{job=\"$sources\"}[5m])", "legendFormat": "Write", "range": true, "refId": "A" }],
+      "title": "Storage Write Rate", "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "custom": { "axisBorderShow": false, "axisCenteredZero": false, "axisColorMode": "text", "axisLabel": "", "axisPlacement": "auto", "drawStyle": "line", "fillOpacity": 10, "gradientMode": "none", "hideFrom": { "legend": false, "tooltip": false, "viz": false }, "lineInterpolation": "linear", "lineWidth": 1, "pointSize": 5, "scaleDistribution": { "type": "linear" }, "showPoints": "never", "spanNulls": false, "stacking": { "group": "A", "mode": "none" }, "thresholdsStyle": { "mode": "off" } }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "Bps" }, "overrides": [] },
+      "gridPos": { "h": 5, "w": 6, "x": 18, "y": 1 }, "id": 5,
+      "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "none" } },
+      "targets": [{ "editorMode": "code", "expr": "rate(orthanc_storage_read_bytes{job=\"$sources\"}[5m])", "legendFormat": "Read", "range": true, "refId": "A" }],
+      "title": "Storage Read Rate", "type": "timeseries"
+    },
+
+    { "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 6 }, "id": 101, "title": "Cache Performance", "type": "row" },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "mode": "thresholds" }, "mappings": [], "max": 100, "min": 0, "thresholds": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "yellow", "value": 60 }, { "color": "green", "value": 80 }] }, "unit": "percent" }, "overrides": [] },
+      "gridPos": { "h": 8, "w": 6, "x": 0, "y": 7 }, "id": 6,
+      "options": { "minVizHeight": 75, "minVizWidth": 75, "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "showThresholdLabels": false, "showThresholdMarkers": true },
+      "pluginVersion": "12.1.1",
+      "targets": [{ "editorMode": "code", "expr": "rate(orthanc_storage_cache_hit_count{job=\"$sources\"}[5m]) / (rate(orthanc_storage_cache_hit_count{job=\"$sources\"}[5m]) + rate(orthanc_storage_cache_miss_count{job=\"$sources\"}[5m])) * 100", "legendFormat": "Hit Rate %", "range": true, "refId": "A" }],
+      "title": "Storage Cache Hit Rate", "type": "gauge"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "custom": { "axisBorderShow": false, "axisCenteredZero": false, "axisColorMode": "text", "axisLabel": "", "axisPlacement": "auto", "drawStyle": "line", "fillOpacity": 10, "gradientMode": "none", "hideFrom": { "legend": false, "tooltip": false, "viz": false }, "lineInterpolation": "linear", "lineWidth": 1, "pointSize": 5, "scaleDistribution": { "type": "linear" }, "showPoints": "never", "spanNulls": false, "stacking": { "group": "A", "mode": "none" }, "thresholdsStyle": { "mode": "off" } }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "ops" }, "overrides": [] },
+      "gridPos": { "h": 8, "w": 10, "x": 6, "y": 7 }, "id": 7,
+      "options": { "legend": { "calcs": ["mean"], "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "none" } },
+      "targets": [
+        { "editorMode": "code", "expr": "rate(orthanc_storage_cache_hit_count{job=\"$sources\"}[5m])", "legendFormat": "Hits/s", "range": true, "refId": "A" },
+        { "editorMode": "code", "expr": "rate(orthanc_storage_cache_miss_count{job=\"$sources\"}[5m])", "legendFormat": "Misses/s", "range": true, "refId": "B" }
+      ],
+      "title": "Cache Hits vs Misses", "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "fixedColor": "purple", "mode": "fixed" }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "short" }, "overrides": [] },
+      "gridPos": { "h": 4, "w": 4, "x": 16, "y": 7 }, "id": 8,
+      "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+      "pluginVersion": "12.1.1",
+      "targets": [{ "editorMode": "code", "expr": "orthanc_dicom_cache_count{job=\"$sources\"}", "legendFormat": "Count", "range": true, "refId": "A" }],
+      "title": "DICOM Cache Items", "type": "stat"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "fixedColor": "purple", "mode": "fixed" }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "none" }, "overrides": [] },
+      "gridPos": { "h": 4, "w": 4, "x": 20, "y": 7 }, "id": 9,
+      "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+      "pluginVersion": "12.1.1",
+      "targets": [{ "editorMode": "code", "expr": "orthanc_dicom_cache_size_mb{job=\"$sources\"}", "legendFormat": "MB", "range": true, "refId": "A" }],
+      "title": "DICOM Cache Size (MB)", "type": "stat"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "fixedColor": "teal", "mode": "fixed" }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "short" }, "overrides": [] },
+      "gridPos": { "h": 4, "w": 4, "x": 16, "y": 11 }, "id": 10,
+      "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+      "pluginVersion": "12.1.1",
+      "targets": [{ "editorMode": "code", "expr": "orthanc_storage_cache_count{job=\"$sources\"}", "legendFormat": "Count", "range": true, "refId": "A" }],
+      "title": "Storage Cache Items", "type": "stat"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "fixedColor": "teal", "mode": "fixed" }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "none" }, "overrides": [] },
+      "gridPos": { "h": 4, "w": 4, "x": 20, "y": 11 }, "id": 11,
+      "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+      "pluginVersion": "12.1.1",
+      "targets": [{ "editorMode": "code", "expr": "orthanc_storage_cache_size_mb{job=\"$sources\"}", "legendFormat": "MB", "range": true, "refId": "A" }],
+      "title": "Storage Cache Size (MB)", "type": "stat"
+    },
+
+    { "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 15 }, "id": 102, "title": "Storage Operation Latency", "type": "row" },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "custom": { "axisBorderShow": false, "axisCenteredZero": false, "axisColorMode": "text", "axisLabel": "", "axisPlacement": "auto", "drawStyle": "line", "fillOpacity": 5, "gradientMode": "none", "hideFrom": { "legend": false, "tooltip": false, "viz": false }, "lineInterpolation": "linear", "lineWidth": 1, "pointSize": 5, "scaleDistribution": { "type": "linear" }, "showPoints": "never", "spanNulls": false, "stacking": { "group": "A", "mode": "none" }, "thresholdsStyle": { "mode": "off" } }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "ms" }, "overrides": [] },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 16 }, "id": 12,
+      "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "desc" } },
+      "targets": [
+        { "editorMode": "code", "expr": "histogram_quantile(0.50, rate(orthanc_storage_create_duration_ms_bucket{job=\"$sources\"}[5m]))", "legendFormat": "p50", "range": true, "refId": "A" },
+        { "editorMode": "code", "expr": "histogram_quantile(0.90, rate(orthanc_storage_create_duration_ms_bucket{job=\"$sources\"}[5m]))", "legendFormat": "p90", "range": true, "refId": "B" },
+        { "editorMode": "code", "expr": "histogram_quantile(0.99, rate(orthanc_storage_create_duration_ms_bucket{job=\"$sources\"}[5m]))", "legendFormat": "p99", "range": true, "refId": "C" }
+      ],
+      "title": "Storage Create Duration", "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "custom": { "axisBorderShow": false, "axisCenteredZero": false, "axisColorMode": "text", "axisLabel": "", "axisPlacement": "auto", "drawStyle": "line", "fillOpacity": 5, "gradientMode": "none", "hideFrom": { "legend": false, "tooltip": false, "viz": false }, "lineInterpolation": "linear", "lineWidth": 1, "pointSize": 5, "scaleDistribution": { "type": "linear" }, "showPoints": "never", "spanNulls": false, "stacking": { "group": "A", "mode": "none" }, "thresholdsStyle": { "mode": "off" } }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "ms" }, "overrides": [] },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 16 }, "id": 13,
+      "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "desc" } },
+      "targets": [
+        { "editorMode": "code", "expr": "histogram_quantile(0.50, rate(orthanc_storage_read_duration_ms_bucket{job=\"$sources\"}[5m]))", "legendFormat": "p50", "range": true, "refId": "A" },
+        { "editorMode": "code", "expr": "histogram_quantile(0.90, rate(orthanc_storage_read_duration_ms_bucket{job=\"$sources\"}[5m]))", "legendFormat": "p90", "range": true, "refId": "B" },
+        { "editorMode": "code", "expr": "histogram_quantile(0.99, rate(orthanc_storage_read_duration_ms_bucket{job=\"$sources\"}[5m]))", "legendFormat": "p99", "range": true, "refId": "C" }
+      ],
+      "title": "Storage Read Duration", "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "custom": { "axisBorderShow": false, "axisCenteredZero": false, "axisColorMode": "text", "axisLabel": "", "axisPlacement": "auto", "drawStyle": "line", "fillOpacity": 5, "gradientMode": "none", "hideFrom": { "legend": false, "tooltip": false, "viz": false }, "lineInterpolation": "linear", "lineWidth": 1, "pointSize": 5, "scaleDistribution": { "type": "linear" }, "showPoints": "never", "spanNulls": false, "stacking": { "group": "A", "mode": "none" }, "thresholdsStyle": { "mode": "off" } }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "ms" }, "overrides": [] },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 24 }, "id": 14,
+      "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "desc" } },
+      "targets": [
+        { "editorMode": "code", "expr": "histogram_quantile(0.50, rate(orthanc_store_dicom_duration_ms_bucket{job=\"$sources\"}[5m]))", "legendFormat": "p50", "range": true, "refId": "A" },
+        { "editorMode": "code", "expr": "histogram_quantile(0.90, rate(orthanc_store_dicom_duration_ms_bucket{job=\"$sources\"}[5m]))", "legendFormat": "p90", "range": true, "refId": "B" },
+        { "editorMode": "code", "expr": "histogram_quantile(0.99, rate(orthanc_store_dicom_duration_ms_bucket{job=\"$sources\"}[5m]))", "legendFormat": "p99", "range": true, "refId": "C" }
+      ],
+      "title": "Store DICOM Duration", "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "custom": { "axisBorderShow": false, "axisCenteredZero": false, "axisColorMode": "text", "axisLabel": "", "axisPlacement": "auto", "drawStyle": "line", "fillOpacity": 5, "gradientMode": "none", "hideFrom": { "legend": false, "tooltip": false, "viz": false }, "lineInterpolation": "linear", "lineWidth": 1, "pointSize": 5, "scaleDistribution": { "type": "linear" }, "showPoints": "never", "spanNulls": false, "stacking": { "group": "A", "mode": "none" }, "thresholdsStyle": { "mode": "off" } }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "ms" }, "overrides": [] },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 24 }, "id": 15,
+      "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "desc" } },
+      "targets": [
+        { "editorMode": "code", "expr": "histogram_quantile(0.50, rate(orthanc_memory_trimming_duration_ms_bucket{job=\"$sources\"}[5m]))", "legendFormat": "p50", "range": true, "refId": "A" },
+        { "editorMode": "code", "expr": "histogram_quantile(0.99, rate(orthanc_memory_trimming_duration_ms_bucket{job=\"$sources\"}[5m]))", "legendFormat": "p99", "range": true, "refId": "B" }
+      ],
+      "title": "Memory Trimming Duration", "type": "timeseries"
+    },
+
+    { "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 32 }, "id": 103, "title": "REST API", "type": "row" },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "fixedColor": "red", "mode": "fixed" }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 5 }, { "color": "red", "value": 20 }] }, "unit": "short" }, "overrides": [] },
+      "gridPos": { "h": 6, "w": 4, "x": 0, "y": 33 }, "id": 16,
+      "options": { "colorMode": "background", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+      "pluginVersion": "12.1.1",
+      "targets": [{ "editorMode": "code", "expr": "orthanc_rest_api_active_requests{job=\"$sources\"}", "legendFormat": "Active", "range": true, "refId": "A" }],
+      "title": "Active HTTP Requests", "type": "stat"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "custom": { "axisBorderShow": false, "axisCenteredZero": false, "axisColorMode": "text", "axisLabel": "", "axisPlacement": "auto", "drawStyle": "line", "fillOpacity": 10, "gradientMode": "none", "hideFrom": { "legend": false, "tooltip": false, "viz": false }, "lineInterpolation": "linear", "lineWidth": 1, "pointSize": 5, "scaleDistribution": { "type": "linear" }, "showPoints": "never", "spanNulls": false, "stacking": { "group": "A", "mode": "none" }, "thresholdsStyle": { "mode": "off" } }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "reqps" }, "overrides": [] },
+      "gridPos": { "h": 6, "w": 10, "x": 4, "y": 33 }, "id": 17,
+      "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "none" } },
+      "targets": [{ "editorMode": "code", "expr": "rate(orthanc_rest_api_duration_ms_count{job=\"$sources\"}[5m])", "legendFormat": "Requests/s", "range": true, "refId": "A" }],
+      "title": "Request Rate", "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "custom": { "axisBorderShow": false, "axisCenteredZero": false, "axisColorMode": "text", "axisLabel": "", "axisPlacement": "auto", "drawStyle": "line", "fillOpacity": 5, "gradientMode": "none", "hideFrom": { "legend": false, "tooltip": false, "viz": false }, "lineInterpolation": "linear", "lineWidth": 1, "pointSize": 5, "scaleDistribution": { "type": "linear" }, "showPoints": "never", "spanNulls": false, "stacking": { "group": "A", "mode": "none" }, "thresholdsStyle": { "mode": "off" } }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "ms" }, "overrides": [] },
+      "gridPos": { "h": 6, "w": 10, "x": 14, "y": 33 }, "id": 18,
+      "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "desc" } },
+      "targets": [
+        { "editorMode": "code", "expr": "histogram_quantile(0.50, rate(orthanc_rest_api_duration_ms_bucket{job=\"$sources\"}[5m]))", "legendFormat": "p50", "range": true, "refId": "A" },
+        { "editorMode": "code", "expr": "histogram_quantile(0.90, rate(orthanc_rest_api_duration_ms_bucket{job=\"$sources\"}[5m]))", "legendFormat": "p90", "range": true, "refId": "B" },
+        { "editorMode": "code", "expr": "histogram_quantile(0.99, rate(orthanc_rest_api_duration_ms_bucket{job=\"$sources\"}[5m]))", "legendFormat": "p99", "range": true, "refId": "C" }
+      ],
+      "title": "REST API Latency (p50 / p90 / p99)", "type": "timeseries"
+    },
+
+    { "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 39 }, "id": 104, "title": "DICOM Protocol (SCP)", "type": "row" },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "custom": { "axisBorderShow": false, "axisCenteredZero": false, "axisColorMode": "text", "axisLabel": "", "axisPlacement": "auto", "drawStyle": "line", "fillOpacity": 5, "gradientMode": "none", "hideFrom": { "legend": false, "tooltip": false, "viz": false }, "lineInterpolation": "linear", "lineWidth": 1, "pointSize": 5, "scaleDistribution": { "type": "linear" }, "showPoints": "never", "spanNulls": false, "stacking": { "group": "A", "mode": "none" }, "thresholdsStyle": { "mode": "off" } }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "ms" }, "overrides": [] },
+      "gridPos": { "h": 9, "w": 8, "x": 0, "y": 40 }, "id": 19,
+      "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "desc" } },
+      "targets": [
+        { "editorMode": "code", "expr": "histogram_quantile(0.50, rate(orthanc_find_scp_duration_ms_bucket{job=\"$sources\"}[5m]))", "legendFormat": "p50", "range": true, "refId": "A" },
+        { "editorMode": "code", "expr": "histogram_quantile(0.90, rate(orthanc_find_scp_duration_ms_bucket{job=\"$sources\"}[5m]))", "legendFormat": "p90", "range": true, "refId": "B" },
+        { "editorMode": "code", "expr": "histogram_quantile(0.99, rate(orthanc_find_scp_duration_ms_bucket{job=\"$sources\"}[5m]))", "legendFormat": "p99", "range": true, "refId": "C" }
+      ],
+      "title": "C-FIND Duration", "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "custom": { "axisBorderShow": false, "axisCenteredZero": false, "axisColorMode": "text", "axisLabel": "", "axisPlacement": "auto", "drawStyle": "line", "fillOpacity": 5, "gradientMode": "none", "hideFrom": { "legend": false, "tooltip": false, "viz": false }, "lineInterpolation": "linear", "lineWidth": 1, "pointSize": 5, "scaleDistribution": { "type": "linear" }, "showPoints": "never", "spanNulls": false, "stacking": { "group": "A", "mode": "none" }, "thresholdsStyle": { "mode": "off" } }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "ms" }, "overrides": [] },
+      "gridPos": { "h": 9, "w": 8, "x": 8, "y": 40 }, "id": 20,
+      "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "desc" } },
+      "targets": [
+        { "editorMode": "code", "expr": "histogram_quantile(0.50, rate(orthanc_get_scp_duration_ms_bucket{job=\"$sources\"}[5m]))", "legendFormat": "p50", "range": true, "refId": "A" },
+        { "editorMode": "code", "expr": "histogram_quantile(0.90, rate(orthanc_get_scp_duration_ms_bucket{job=\"$sources\"}[5m]))", "legendFormat": "p90", "range": true, "refId": "B" },
+        { "editorMode": "code", "expr": "histogram_quantile(0.99, rate(orthanc_get_scp_duration_ms_bucket{job=\"$sources\"}[5m]))", "legendFormat": "p99", "range": true, "refId": "C" }
+      ],
+      "title": "C-GET Duration", "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "custom": { "axisBorderShow": false, "axisCenteredZero": false, "axisColorMode": "text", "axisLabel": "", "axisPlacement": "auto", "drawStyle": "line", "fillOpacity": 5, "gradientMode": "none", "hideFrom": { "legend": false, "tooltip": false, "viz": false }, "lineInterpolation": "linear", "lineWidth": 1, "pointSize": 5, "scaleDistribution": { "type": "linear" }, "showPoints": "never", "spanNulls": false, "stacking": { "group": "A", "mode": "none" }, "thresholdsStyle": { "mode": "off" } }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "ms" }, "overrides": [] },
+      "gridPos": { "h": 9, "w": 8, "x": 16, "y": 40 }, "id": 21,
+      "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "desc" } },
+      "targets": [
+        { "editorMode": "code", "expr": "histogram_quantile(0.50, rate(orthanc_move_scp_duration_ms_bucket{job=\"$sources\"}[5m]))", "legendFormat": "p50", "range": true, "refId": "A" },
+        { "editorMode": "code", "expr": "histogram_quantile(0.90, rate(orthanc_move_scp_duration_ms_bucket{job=\"$sources\"}[5m]))", "legendFormat": "p90", "range": true, "refId": "B" },
+        { "editorMode": "code", "expr": "histogram_quantile(0.99, rate(orthanc_move_scp_duration_ms_bucket{job=\"$sources\"}[5m]))", "legendFormat": "p99", "range": true, "refId": "C" }
+      ],
+      "title": "C-MOVE Duration", "type": "timeseries"
+    },
+
+    { "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 49 }, "id": 105, "title": "Thread Utilization", "type": "row" },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "mode": "thresholds" }, "mappings": [], "min": 0, "thresholds": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "yellow", "value": 2 }, { "color": "green", "value": 5 }] }, "unit": "short" }, "overrides": [] },
+      "gridPos": { "h": 8, "w": 6, "x": 0, "y": 50 }, "id": 22,
+      "options": { "minVizHeight": 75, "minVizWidth": 75, "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "showThresholdLabels": false, "showThresholdMarkers": true },
+      "pluginVersion": "12.1.1",
+      "targets": [{ "editorMode": "code", "expr": "orthanc_available_dicom_threads{job=\"$sources\"}", "legendFormat": "DICOM Threads", "range": true, "refId": "A" }],
+      "title": "Available DICOM Threads", "type": "gauge"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "mode": "thresholds" }, "mappings": [], "min": 0, "thresholds": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "yellow", "value": 2 }, { "color": "green", "value": 5 }] }, "unit": "short" }, "overrides": [] },
+      "gridPos": { "h": 8, "w": 6, "x": 6, "y": 50 }, "id": 23,
+      "options": { "minVizHeight": 75, "minVizWidth": 75, "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "showThresholdLabels": false, "showThresholdMarkers": true },
+      "pluginVersion": "12.1.1",
+      "targets": [{ "editorMode": "code", "expr": "orthanc_available_http_threads{job=\"$sources\"}", "legendFormat": "HTTP Threads", "range": true, "refId": "A" }],
+      "title": "Available HTTP Threads", "type": "gauge"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "custom": { "axisBorderShow": false, "axisCenteredZero": false, "axisColorMode": "text", "axisLabel": "", "axisPlacement": "auto", "drawStyle": "line", "fillOpacity": 10, "gradientMode": "none", "hideFrom": { "legend": false, "tooltip": false, "viz": false }, "lineInterpolation": "linear", "lineWidth": 1, "pointSize": 5, "scaleDistribution": { "type": "linear" }, "showPoints": "never", "spanNulls": false, "stacking": { "group": "A", "mode": "none" }, "thresholdsStyle": { "mode": "off" } }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "short" }, "overrides": [] },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 50 }, "id": 24,
+      "options": { "legend": { "calcs": ["mean", "min"], "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "none" } },
+      "targets": [
+        { "editorMode": "code", "expr": "orthanc_available_dicom_threads{job=\"$sources\"}", "legendFormat": "DICOM Threads", "range": true, "refId": "A" },
+        { "editorMode": "code", "expr": "orthanc_available_http_threads{job=\"$sources\"}", "legendFormat": "HTTP Threads", "range": true, "refId": "B" }
+      ],
+      "title": "Thread Availability Over Time", "type": "timeseries"
+    },
+
+    { "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 58 }, "id": 106, "title": "System Health", "type": "row" },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "fixedColor": "green", "mode": "fixed" }, "decimals": 1, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "d" }, "overrides": [] },
+      "gridPos": { "h": 6, "w": 4, "x": 0, "y": 59 }, "id": 25,
+      "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+      "pluginVersion": "12.1.1",
+      "targets": [{ "editorMode": "code", "expr": "orthanc_up_time_s{job=\"$sources\"} / 86400", "legendFormat": "Uptime", "range": true, "refId": "A" }],
+      "title": "Uptime", "type": "stat"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "fixedColor": "text", "mode": "fixed" }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "short" }, "overrides": [] },
+      "gridPos": { "h": 6, "w": 4, "x": 4, "y": 59 }, "id": 26,
+      "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+      "pluginVersion": "12.1.1",
+      "targets": [{ "editorMode": "code", "expr": "orthanc_last_change{job=\"$sources\"}", "legendFormat": "Change ID", "range": true, "refId": "A" }],
+      "title": "Last Change ID", "type": "stat"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "custom": { "axisBorderShow": false, "axisCenteredZero": false, "axisColorMode": "text", "axisLabel": "", "axisPlacement": "auto", "drawStyle": "line", "fillOpacity": 10, "gradientMode": "none", "hideFrom": { "legend": false, "tooltip": false, "viz": false }, "lineInterpolation": "linear", "lineWidth": 1, "pointSize": 5, "scaleDistribution": { "type": "linear" }, "showPoints": "never", "spanNulls": false, "stacking": { "group": "A", "mode": "none" }, "thresholdsStyle": { "mode": "off" } }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "short" },
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Failed" }, "properties": [{ "id": "color", "value": { "fixedColor": "red", "mode": "fixed" } }] },
+          { "matcher": { "id": "byName", "options": "Pending" }, "properties": [{ "id": "color", "value": { "fixedColor": "yellow", "mode": "fixed" } }] },
+          { "matcher": { "id": "byName", "options": "Running" }, "properties": [{ "id": "color", "value": { "fixedColor": "blue", "mode": "fixed" } }] }
+        ]
+      },
+      "gridPos": { "h": 6, "w": 16, "x": 8, "y": 59 }, "id": 27,
+      "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "none" } },
+      "targets": [
+        { "editorMode": "code", "expr": "orthanc_jobs_pending{job=\"$sources\"}", "legendFormat": "Pending", "range": true, "refId": "A" },
+        { "editorMode": "code", "expr": "orthanc_jobs_running{job=\"$sources\"}", "legendFormat": "Running", "range": true, "refId": "B" },
+        { "editorMode": "code", "expr": "increase(orthanc_jobs_failed{job=\"$sources\"}[5m])", "legendFormat": "Failed", "range": true, "refId": "C" }
+      ],
+      "title": "Jobs (Pending / Running / Failed per 5m)", "type": "timeseries"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 41,
+  "tags": ["orthanc", "storage", "cache", "api", "performance", "dicom"],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+        "definition": "label_values(orthanc_up_time_s, job)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Job",
+        "multi": false,
+        "name": "sources",
+        "options": [],
+        "query": { "query": "label_values(orthanc_up_time_s, job)", "refId": "StandardVariableQuery" },
+        "refresh": 2,
+        "regex": "",
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": { "from": "now-1h", "to": "now" },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Orthanc — Full Monitoring v2.0",
+  "uid": "orthanc-full-v2",
+  "version": 1,
+  "weekStart": ""
+}
