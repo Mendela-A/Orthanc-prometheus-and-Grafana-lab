@@ -39,21 +39,21 @@
     { "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 }, "id": 100, "title": "Storage Overview", "type": "row" },
     {
       "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
-      "fieldConfig": { "defaults": { "color": { "fixedColor": "blue", "mode": "fixed" }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "none" }, "overrides": [] },
+      "fieldConfig": { "defaults": { "color": { "fixedColor": "blue", "mode": "fixed" }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "decbytes" }, "overrides": [] },
       "gridPos": { "h": 5, "w": 4, "x": 0, "y": 1 }, "id": 1,
       "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
       "pluginVersion": "12.1.1",
-      "targets": [{ "editorMode": "code", "expr": "orthanc_disk_size_mb{job=\"$sources\"}", "legendFormat": "Disk (MB)", "range": true, "refId": "A" }],
-      "title": "Disk Size (MB)", "type": "stat"
+      "targets": [{ "editorMode": "code", "expr": "orthanc_disk_size_mb{job=\"$sources\"} * 1048576", "legendFormat": "Disk", "range": true, "refId": "A" }],
+      "title": "Disk Size", "type": "stat"
     },
     {
       "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
-      "fieldConfig": { "defaults": { "color": { "fixedColor": "green", "mode": "fixed" }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "none" }, "overrides": [] },
+      "fieldConfig": { "defaults": { "color": { "fixedColor": "green", "mode": "fixed" }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "decbytes" }, "overrides": [] },
       "gridPos": { "h": 5, "w": 4, "x": 4, "y": 1 }, "id": 2,
       "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
       "pluginVersion": "12.1.1",
-      "targets": [{ "editorMode": "code", "expr": "orthanc_uncompressed_size_mb{job=\"$sources\"}", "legendFormat": "Uncompressed (MB)", "range": true, "refId": "A" }],
-      "title": "Uncompressed Size (MB)", "type": "stat"
+      "targets": [{ "editorMode": "code", "expr": "orthanc_uncompressed_size_mb{job=\"$sources\"} * 1048576", "legendFormat": "Uncompressed", "range": true, "refId": "A" }],
+      "title": "Uncompressed Size", "type": "stat"
     },
     {
       "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
@@ -113,12 +113,12 @@
     },
     {
       "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
-      "fieldConfig": { "defaults": { "color": { "fixedColor": "purple", "mode": "fixed" }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "none" }, "overrides": [] },
+      "fieldConfig": { "defaults": { "color": { "fixedColor": "purple", "mode": "fixed" }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "decbytes" }, "overrides": [] },
       "gridPos": { "h": 4, "w": 4, "x": 20, "y": 7 }, "id": 9,
       "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
       "pluginVersion": "12.1.1",
-      "targets": [{ "editorMode": "code", "expr": "orthanc_dicom_cache_size_mb{job=\"$sources\"}", "legendFormat": "MB", "range": true, "refId": "A" }],
-      "title": "DICOM Cache Size (MB)", "type": "stat"
+      "targets": [{ "editorMode": "code", "expr": "orthanc_dicom_cache_size_mb{job=\"$sources\"} * 1048576", "legendFormat": "Size", "range": true, "refId": "A" }],
+      "title": "DICOM Cache Size", "type": "stat"
     },
     {
       "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
@@ -131,12 +131,12 @@
     },
     {
       "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
-      "fieldConfig": { "defaults": { "color": { "fixedColor": "teal", "mode": "fixed" }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "none" }, "overrides": [] },
+      "fieldConfig": { "defaults": { "color": { "fixedColor": "teal", "mode": "fixed" }, "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }, "unit": "decbytes" }, "overrides": [] },
       "gridPos": { "h": 4, "w": 4, "x": 20, "y": 11 }, "id": 11,
       "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
       "pluginVersion": "12.1.1",
-      "targets": [{ "editorMode": "code", "expr": "orthanc_storage_cache_size_mb{job=\"$sources\"}", "legendFormat": "MB", "range": true, "refId": "A" }],
-      "title": "Storage Cache Size (MB)", "type": "stat"
+      "targets": [{ "editorMode": "code", "expr": "orthanc_storage_cache_size_mb{job=\"$sources\"} * 1048576", "legendFormat": "Size", "range": true, "refId": "A" }],
+      "title": "Storage Cache Size", "type": "stat"
     },
 
     { "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 15 }, "id": 102, "title": "Storage Operation Latency", "type": "row" },
@@ -273,7 +273,7 @@
       "gridPos": { "h": 8, "w": 6, "x": 6, "y": 50 }, "id": 23,
       "options": { "minVizHeight": 75, "minVizWidth": 75, "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "showThresholdLabels": false, "showThresholdMarkers": true },
       "pluginVersion": "12.1.1",
-      "targets": [{ "editorMode": "code", "expr": "orthanc_available_http_threads{job=\"$sources\"}", "legendFormat": "HTTP Threads", "range": true, "refId": "A" }],
+      "targets": [{ "editorMode": "code", "expr": "orthanc_available_http_threads_count{job=\"$sources\"}", "legendFormat": "HTTP Threads", "range": true, "refId": "A" }],
       "title": "Available HTTP Threads", "type": "gauge"
     },
     {
@@ -283,7 +283,7 @@
       "options": { "legend": { "calcs": ["mean", "min"], "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "none" } },
       "targets": [
         { "editorMode": "code", "expr": "orthanc_available_dicom_threads{job=\"$sources\"}", "legendFormat": "DICOM Threads", "range": true, "refId": "A" },
-        { "editorMode": "code", "expr": "orthanc_available_http_threads{job=\"$sources\"}", "legendFormat": "HTTP Threads", "range": true, "refId": "B" }
+        { "editorMode": "code", "expr": "orthanc_available_http_threads_count{job=\"$sources\"}", "legendFormat": "HTTP Threads", "range": true, "refId": "B" }
       ],
       "title": "Thread Availability Over Time", "type": "timeseries"
     },
